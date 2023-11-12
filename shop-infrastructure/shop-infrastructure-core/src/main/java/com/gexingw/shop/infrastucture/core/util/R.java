@@ -1,5 +1,6 @@
 package com.gexingw.shop.infrastucture.core.util;
 
+import com.gexingw.shop.infrastucture.core.enums.RespCode;
 import lombok.Getter;
 
 import java.io.Serializable;

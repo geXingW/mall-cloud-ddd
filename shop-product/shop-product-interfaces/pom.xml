@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-order</artifactId>
+        <artifactId>shop-product</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-order-interfaces</artifactId>
+    <artifactId>shop-product-interfaces</artifactId>
     <version>${revision}</version>
 
     <properties>

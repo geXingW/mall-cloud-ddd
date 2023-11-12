@@ -19,6 +19,7 @@
         <module>shop-service</module>
         <module>shop-infrastructure</module>
         <module>shop-order</module>
+        <module>shop-product</module>
     </modules>
 
     <properties>
@@ -145,6 +146,19 @@
                 <artifactId>shop-infrastructure-spring</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.gexingw</groupId>
+                <artifactId>shop-product-interfaces</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.gexingw</groupId>
+                <artifactId>shop-order-interfaces</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

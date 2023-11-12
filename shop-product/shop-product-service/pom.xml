@@ -5,14 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-order</artifactId>
+        <artifactId>shop-product</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-order-service</artifactId>
+    <artifactId>shop-product-service</artifactId>
     <version>${revision}</version>
 
     <properties>
+
     </properties>
 
     <dependencies>
@@ -39,37 +40,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-core</artifactId>
-        </dependency>
-
         <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-db</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-spring</artifactId>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-order-interfaces</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.gexingw</groupId>
             <artifactId>shop-product-interfaces</artifactId>
         </dependency>
+
 
     </dependencies>
 

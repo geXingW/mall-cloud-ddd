@@ -1,4 +1,4 @@
-package com.gexingw.shop.infrastucture.core.util;
+package com.gexingw.shop.infrastucture.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Getter;
  * shop-cloud-ddd.
  *
  * @author GeXingW
- * @date 2023/9/23 15:13
+ * @date 2023/11/12 18:36
  */
 @Getter
 @AllArgsConstructor
@@ -28,15 +28,6 @@ public enum RespCode {
     MSG_NOT_READABLE(400005, "消息不能读取！"),
     RECORD_HAS_EXISTED(400006, "数据重复！"),
 
-    UN_AUTHORIZATION(401000, "请先登录！"),
-    AUTHORIZATION_EXPIRED(401001, "登录已过期，请重新登录！"),
-    INVALID_CREDENTIALS(401002, "凭证无效，请检查！"),
-    INVALID_USERNAME_OR_PASSWORD(401003, "用户名或密码错误！"),
-    INVALID_CLIENT(401004, "ClientId或密码错误！"),
-    INVALID_CAPTCHA(401005, "验证码错误或已过期！"),
-
-    PERMISSION_DENIED(403001, "无权限！"),
-
     NOT_FOUND(404000, "未找到资源！"),
     SOURCE_NOT_FOUND(404001, "记录不存在！"),
 
@@ -47,23 +38,18 @@ public enum RespCode {
     /**
      * 失败的响应
      */
-    ERROR(500000, "已失败！"),
+    ERROR(500000, "请求失败！"),
     QUERY_ERROR(500010, "查询失败，稍后再试试吧！"),
     CREATE_ERROR(500011, "创建失败，稍后再试试吧！"),
     UPDATE_ERROR(500012, "更新失败，稍后再试试吧！"),
+    CANCEL_ERROR(500013, "取消失败，稍后再试试吧！"),
     DELETE_ERROR(500014, "删除失败，稍后再试试吧！"),
 
-    /**
-     * 用户模块-错误码
-     * 范围：200100~200199
-     */
-    USER_OR_PASSWORD_ERROR(200100, "用户名或密码错误！"),
-    VERIFY_CODE_ERROR(200100, "验证码错误！"),
-    USER_HAS_EXIST_ERROR(200101, "用户已存在，请更换手机号重试"),
     ;
-
     private final int code;
 
     private final String message;
 
+
 }
+

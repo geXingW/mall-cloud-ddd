@@ -9,17 +9,20 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-order</artifactId>
-    <version>${revision}</version>
-
+    <artifactId>shop-product</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>shop-order-interfaces</module>
-        <module>shop-order-service</module>
+        <module>shop-product-service</module>
+        <module>shop-product-interfaces</module>
     </modules>
+    <version>${revision}</version>
 
     <properties>
 
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>
