@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/shop-infrastructure-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/shop-infrastructure-db/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/shop-infrastructure-spring/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/shop-infrastructure-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-order/shop-order-interfaces/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-order/shop-order-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-order/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-service/shop-service-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-service/shop-service-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
