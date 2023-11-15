@@ -5,30 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-infrastructure</artifactId>
+        <artifactId>shop-user</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-infrastructure-spring</artifactId>
+    <artifactId>shop-user-interfaces</artifactId>
     <version>${revision}</version>
 
     <properties>
-
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-    </dependencies>
 
 </project>

@@ -16,10 +16,11 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>shop-service</module>
         <module>shop-infrastructure</module>
         <module>shop-order</module>
         <module>shop-product</module>
+        <module>shop-user</module>
+        <module>shop-aggregate</module>
     </modules>
 
     <properties>
@@ -27,6 +28,9 @@
 
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+
+        <dubbo.version>3.2.7</dubbo.version>
+
         <oauth2-authorization-server.version>0.4.3</oauth2-authorization-server.version>
 
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
@@ -56,6 +60,7 @@
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -70,6 +75,41 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-nacos</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper-curator5</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>logback-classic</artifactId>
+                        <groupId>ch.qos.logback</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>logback-core</artifactId>
+                        <groupId>ch.qos.logback</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>slf4j-reload4j</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -123,43 +163,6 @@
                 <version>${mysql-connector-j.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-infrastructure-core</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-infrastructure-db</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-infrastructure-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-infrastructure-spring</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-product-interfaces</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.gexingw</groupId>
-                <artifactId>shop-order-interfaces</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 
@@ -169,6 +172,12 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+
         </plugins>
 
         <pluginManagement>
@@ -234,6 +243,51 @@
                             </path>
                         </annotationProcessorPaths>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/ProductServiceTest.java</exclude>
+                            <exclude>**/*Application.java</exclude>
+                        </excludes>
+                        <skipTests>false</skipTests>
+                        <argLine>${argLine}</argLine>
+                    </configuration>
+                </plugin>
+
+                <!-- 单元测试报告生成 -->
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.11</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <includes>
+                                    <include>com/gexingw/**/*</include>
+                                </includes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

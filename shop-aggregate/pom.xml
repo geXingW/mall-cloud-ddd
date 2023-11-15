@@ -5,30 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-infrastructure</artifactId>
+        <artifactId>shop-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-infrastructure-spring</artifactId>
+    <artifactId>shop-aggregate</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>shop-aggregate-test</module>
+        <module>shop-aggregate-pom</module>
+    </modules>
 
     <properties>
-
     </properties>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-infrastructure-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-    </dependencies>
 
 </project>

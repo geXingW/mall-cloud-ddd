@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: shop-user-service
+
   cloud:
     nacos:
       server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
@@ -6,28 +9,22 @@ spring:
       password: ${NACOS_PASSWORD:nacos}
 
       config:
-        namespace: ${spring.cloud.nacos.discovery.namespace}
-        group: ${spring.cloud.nacos.discovery.group}
+        namespace: ${NACOS_NAMESPACE:shop-cloud-ddd}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        refresh-enabled: true
         file-extension: yaml
-        # 用于多个服务共享的的公共配置文件
-        shared-configs:
-          - data-id: shop-db-base.yaml
-            group: DEFAULT_GROUP
-            refresh: true
 
 dubbo:
   application:
     name: ${spring.application.name}
-    qos-enable: false
-    register-mode: instance
 
   protocol:
+    id: dubbo
     name: dubbo
     port: -1
 
   registry:
-    address: nacos://${spring.cloud.nacos.server-addr}
-    use-as-config-center: false
+    address: nacos://node-200:8848
     parameters:
       namespace: c7bd8fb3-ee53-4bf5-9b0d-9ba6d6adcfa6
       register-consumer-url: true

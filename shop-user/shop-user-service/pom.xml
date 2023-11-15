@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-product</artifactId>
+        <artifactId>shop-user</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-product-service</artifactId>
+    <artifactId>shop-user-service</artifactId>
     <version>${revision}</version>
 
     <properties>
@@ -17,11 +17,14 @@
     </properties>
 
     <dependencies>
-
-        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <groupId>com.gexingw</groupId>
+            <artifactId>shop-infrastructure-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gexingw</groupId>
+            <artifactId>shop-user-interfaces</artifactId>
         </dependency>
 
         <dependency>
@@ -31,19 +34,8 @@
 
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-product-interfaces</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gexingw</groupId>
-            <artifactId>shop-user-interfaces</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
         <dependency>
@@ -51,11 +43,22 @@
             <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-zookeeper-curator5-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-registry-nacos</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
 
     </dependencies>
 

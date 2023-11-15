@@ -5,53 +5,35 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.gexingw</groupId>
-        <artifactId>shop-infrastructure</artifactId>
+        <artifactId>shop-cloud</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>shop-infrastructure-core</artifactId>
-    <version>${revision}</version>
+    <artifactId>shop-user</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
+    <modules>
+        <module>shop-user-interfaces</module>
+        <module>shop-user-service</module>
+    </modules>
 
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-        </dependency>
+    <properties>
 
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-        </dependency>
+    </properties>
 
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2-extension-spring5</artifactId>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
+            <dependency>
+                <groupId>com.gexingw</groupId>
+                <artifactId>shop-aggregate-pom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
-
-    </dependencies>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -60,6 +42,8 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
+                        <exclude>**/ShopUserServiceApplication.java</exclude>
+                        <exclude>**/*Application.java</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -71,11 +55,8 @@
                         </goals>
                         <configuration>
                             <includes> <!-- 只检查符合匹配规则的内容的项，不选的话会扫描全部，无视其他配置的限制范围 -->
-<!--                                <include>com/gexingw/**/*</include>-->
+                                <include>com/gexingw/**/*</include>
                             </includes>
-                            <haltOnFailure> <!-- 默认值 -->
-                                true
-                            </haltOnFailure>
                             <rules>
                                 <rule>
                                     <excludes>
@@ -86,12 +67,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.00</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.10</minimum>
+                                            <minimum>0.00</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
