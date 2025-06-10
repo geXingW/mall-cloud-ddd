@@ -64,12 +64,12 @@
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>com.gexingw</groupId>
-            <artifactId>mall-order-interfaces</artifactId>
+            <artifactId>mall-order-client</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.gexingw</groupId>
-            <artifactId>mall-product-interfaces</artifactId>
+            <artifactId>mall-product-client</artifactId>
         </dependency>
 
     </dependencies>

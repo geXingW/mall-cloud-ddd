@@ -14,7 +14,7 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>mall-order-interfaces</module>
+        <module>mall-order-client</module>
         <module>mall-order-service</module>
     </modules>
 

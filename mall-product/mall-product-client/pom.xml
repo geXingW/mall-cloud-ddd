@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>mall-product-interfaces</artifactId>
+    <artifactId>mall-product-client</artifactId>
     <version>${revision}</version>
 
     <properties>

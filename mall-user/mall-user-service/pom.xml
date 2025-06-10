@@ -25,7 +25,7 @@
 
         <dependency>
             <groupId>com.gexingw</groupId>
-            <artifactId>mall-user-interfaces</artifactId>
+            <artifactId>mall-user-client</artifactId>
         </dependency>
 
         <dependency>

@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mall-user-interfaces</module>
+        <module>mall-user-client</module>
         <module>mall-user-service</module>
     </modules>
 

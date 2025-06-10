@@ -45,7 +45,7 @@
 
             <dependency>
                 <groupId>com.gexingw</groupId>
-                <artifactId>mall-user-interfaces</artifactId>
+                <artifactId>mall-user-client</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -57,7 +57,7 @@
 
             <dependency>
                 <groupId>com.gexingw</groupId>
-                <artifactId>mall-product-interfaces</artifactId>
+                <artifactId>mall-product-client</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -69,7 +69,7 @@
 
             <dependency>
                 <groupId>com.gexingw</groupId>
-                <artifactId>mall-order-interfaces</artifactId>
+                <artifactId>mall-order-client</artifactId>
                 <version>${revision}</version>
             </dependency>
 
