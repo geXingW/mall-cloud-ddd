@@ -12,15 +12,15 @@
     </parent>
 
     <groupId>com.gexingw</groupId>
-    <artifactId>shop-cloud</artifactId>
+    <artifactId>mall-cloud</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>shop-infrastructure</module>
-        <module>shop-order</module>
-        <module>shop-product</module>
-        <module>shop-user</module>
-        <module>shop-aggregate</module>
+        <module>mall-infrastructure</module>
+        <module>mall-order</module>
+        <module>mall-product</module>
+        <module>mall-user</module>
+        <module>mall-aggregate</module>
     </modules>
 
     <properties>

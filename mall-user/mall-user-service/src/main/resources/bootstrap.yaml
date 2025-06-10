@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: mall-user-service
+
+  cloud:
+    nacos:
+      server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+
+      config:
+        namespace: ${NACOS_NAMESPACE:mall-cloud}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        refresh-enabled: true
+        file-extension: yaml
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-enable: false
+    register-mode: instance
+
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+
+  registry:
+    address: nacos://${spring.cloud.nacos.server-addr}
+    parameters:
+      namespace: ${spring.cloud.nacos.config.namespace}
+      group: ${spring.cloud.nacos.config.group}
+  #      register-consumer-url: true
+
+  consumer:
+    check: false
