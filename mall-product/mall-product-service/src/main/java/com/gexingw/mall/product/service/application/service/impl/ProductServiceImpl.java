@@ -1,7 +1,7 @@
 package com.gexingw.mall.product.service.application.service.impl;
 
-import com.gexingw.mall.product.interfaces.service.ProductService;
-import com.gexingw.mall.user.interfaces.service.UserService;
+import com.gexingw.mall.product.client.service.ProductService;
+import com.gexingw.mall.user.client.service.UserService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 

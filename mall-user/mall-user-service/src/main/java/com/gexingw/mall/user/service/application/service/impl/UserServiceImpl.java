@@ -1,10 +1,12 @@
 package com.gexingw.mall.user.service.application.service.impl;
 
-import com.gexingw.mall.user.interfaces.service.UserService;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Value;
+
+import com.gexingw.mall.user.client.service.UserService;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * mall-cloud-ddd.

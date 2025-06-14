@@ -2,7 +2,7 @@ package com.gexingw.mall.order.service.application.event.order.submit;
 
 import com.gexingw.mall.infrastucture.core.enums.RespCode;
 import com.gexingw.mall.infrastucture.core.exception.OrderBizException;
-import com.gexingw.mall.product.interfaces.feign.ProductFeign;
+import com.gexingw.mall.product.client.feign.ProductFeign;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

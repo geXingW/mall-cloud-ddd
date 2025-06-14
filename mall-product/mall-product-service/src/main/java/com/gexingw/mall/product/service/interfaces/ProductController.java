@@ -1,7 +1,7 @@
 package com.gexingw.mall.product.service.interfaces;
 
-import com.gexingw.mall.product.interfaces.feign.ProductFeign;
-import com.gexingw.mall.product.interfaces.service.ProductService;
+import com.gexingw.mall.product.client.feign.ProductFeign;
+import com.gexingw.mall.product.client.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

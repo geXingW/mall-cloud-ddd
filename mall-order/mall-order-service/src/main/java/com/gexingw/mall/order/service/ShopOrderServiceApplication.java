@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @date 2023/11/1 18:16
  */
 @EnableAsync
-@EnableFeignClients({"com.gexingw.mall.*.interfaces.feign"})
+@EnableFeignClients({"com.gexingw.mall.*.client.feign"})
 @SpringBootApplication(scanBasePackages = {"com.gexingw.mall.order", "com.gexingw.mall.infrastructure"})
 public class ShopOrderServiceApplication {
 

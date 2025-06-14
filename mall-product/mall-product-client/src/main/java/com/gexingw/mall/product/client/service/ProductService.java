@@ -1,4 +1,4 @@
-package com.gexingw.mall.product.interfaces.service;
+package com.gexingw.mall.product.client.service;
 
 /**
  * mall-cloud-ddd.
