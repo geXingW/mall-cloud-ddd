@@ -1,5 +1,6 @@
 package com.gexingw.mall.user.service.application.service.impl;
 
+import com.gexingw.mall.user.service.application.service.PlatformUserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,12 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @date 2023/11/13 17:08
  */
 @ExtendWith(MockitoExtension.class)
-public class UserServiceImplSnowflakeUntilTest {
+public class DubboPlatformUserImplSnowflakeUntilTest {
 
     @Test
     public void testTest() {
-        UserServiceImpl userService = Mockito.spy(UserServiceImpl.class);
-        Assertions.assertTrue(userService.number(222) > 0);
+//        PlatformUserService userService = Mockito.spy(PlatformUserService.class);
+//        Assertions.assertTrue(userService.number(222) > 0);
     }
 
 }

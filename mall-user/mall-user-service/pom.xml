@@ -28,6 +28,13 @@
             <artifactId>mall-user-client</artifactId>
         </dependency>
 
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>com.gexingw</groupId>
+            <artifactId>mall-infrastructure-db</artifactId>
+        </dependency>
+
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
@@ -39,6 +46,13 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>

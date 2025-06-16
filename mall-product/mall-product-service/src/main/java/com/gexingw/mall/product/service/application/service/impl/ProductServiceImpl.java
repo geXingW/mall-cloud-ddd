@@ -1,7 +1,7 @@
 package com.gexingw.mall.product.service.application.service.impl;
 
 import com.gexingw.mall.product.client.service.ProductService;
-import com.gexingw.mall.user.client.service.UserService;
+import com.gexingw.mall.user.client.dubbo.DubboPlatformUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 
@@ -15,7 +15,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 public class ProductServiceImpl implements ProductService {
 
     @DubboReference
-    private UserService userService;
+    private DubboPlatformUser userService;
 
     @Override
     public String getById(Long id) {

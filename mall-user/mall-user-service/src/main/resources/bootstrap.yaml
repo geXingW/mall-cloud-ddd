@@ -9,7 +9,7 @@ spring:
       password: ${NACOS_PASSWORD:nacos}
 
       config:
-        namespace: ${NACOS_NAMESPACE:mall-cloud}
+        namespace: ${NACOS_NAMESPACE:mall-cloud-ddd}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
         refresh-enabled: true
         file-extension: yaml
