@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.15</version>
+        <version>3.3.13</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,19 +21,20 @@
         <module>mall-product</module>
         <module>mall-user</module>
         <module>mall-aggregate</module>
+        <module>mall-auth</module>
     </modules>
 
     <properties>
         <revision>0.0.1-SNAPSHOT</revision>
 
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2023.0.6</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.2</spring-cloud-alibaba.version>
 
-        <dubbo.version>3.2.7</dubbo.version>
+        <dubbo.version>3.2.10</dubbo.version>
 
-        <oauth2-authorization-server.version>0.4.3</oauth2-authorization-server.version>
+        <oauth2-authorization-server.version>1.3.7</oauth2-authorization-server.version>
 
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <druid.version>1.2.20</druid.version>
         <mysql-connector-j.version>8.1.0</mysql-connector-j.version>
 
@@ -41,12 +42,14 @@
         <apache-common.version>3.12.0</apache-common.version>
         <hutool.version>5.8.18</hutool.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <ddd-core.version>1.0.0</ddd-core.version>
 
         <!-- 构建相关 -->
+        <java.version>17</java.version>
         <flatten-maven-plugin.verion>1.2.7</flatten-maven-plugin.verion>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.encoding>UTF-8</project.build.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -119,6 +122,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
                 <version>${hutool.version}</version>
@@ -161,6 +170,18 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>top.gexingw</groupId>
+                <artifactId>ddd-core</artifactId>
+                <version>${ddd-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${oauth2-authorization-server.version}</version>
             </dependency>
 
         </dependencies>

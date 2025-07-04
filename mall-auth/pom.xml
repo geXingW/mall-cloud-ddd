@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -9,24 +7,26 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>mall-infrastructure</artifactId>
-    <version>${revision}</version>
+    <artifactId>mall-auth</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>mall-infrastructure-core</module>
-        <module>mall-infrastructure-db</module>
-        <module>mall-infrastructure-web</module>
-        <module>mall-infrastructure-spring</module>
-        <module>mall-infrastructure-redis</module>
-        <module>mall-infrastructure-security</module>
-    </modules>
+    <version>${revision}</version>
+    <name>mall-auth</name>
 
     <properties>
-
     </properties>
 
+    <modules>
+        <module>mall-auth-client</module>
+        <module>mall-auth-service</module>
+    </modules>
+
     <dependencies>
+
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>com.gexingw</groupId>
+            <artifactId>mall-infrastructure-core</artifactId>
+        </dependency>
 
     </dependencies>
 
