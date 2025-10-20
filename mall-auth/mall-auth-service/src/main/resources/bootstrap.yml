@@ -13,6 +13,9 @@ spring:
         group: ${NACOS_GROUP:DEFAULT_GROUP}
         refresh-enabled: true
         file-extension: yaml
+        extension-configs:
+          - data-id: mall-cloud-logger.yaml
+            refresh: true
 
 dubbo:
   application:
