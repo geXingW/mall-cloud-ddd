@@ -1,5 +1,6 @@
 package com.gexingw.mall.auth.service.infra.support.auth;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gexingw.mall.auth.service.infra.support.auth.convert.OAuth2PasswordAuthenticationConvert;
 import com.gexingw.mall.auth.service.infra.support.auth.filter.ServletRequestJsonParamsWrapperFilter;
 import com.gexingw.mall.auth.service.infra.support.auth.provider.OAuth2PasswordAuthenticationProvider;
@@ -14,12 +15,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -34,6 +37,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
@@ -63,85 +67,114 @@ import java.util.UUID;
  * @date 2024/2/17 9:01
  */
 @Configuration
-@RequiredArgsConstructor(onConstructor_ = {@Lazy})
+@RequiredArgsConstructor(onConstructor_ = { @Lazy })
 public class AuthorizationServerConfiguration {
 
-    //    private final PasswordEncoder passwordEncoder;
-    private final ServletRequestJsonParamsWrapperFilter servletRequestJsonParamsWrapperFilter;
+        // private final PasswordEncoder passwordEncoder;
+        private final ServletRequestJsonParamsWrapperFilter servletRequestJsonParamsWrapperFilter;
 
-    @Bean
-    @SneakyThrows
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain authorizationFilterChain(HttpSecurity httpSecurity) {
+        @Bean
+        @SneakyThrows
+        @Order(Ordered.HIGHEST_PRECEDENCE)
+        public SecurityFilterChain authorizationFilterChain(HttpSecurity httpSecurity) {
 
-//        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
-//
-//        return httpSecurity.exceptionHandling(
-//                exceptions -> exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-//        ).build();
-        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
-//        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationCode();
+                // OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
+                //
+                // return httpSecurity.exceptionHandling(
+                // exceptions -> exceptions.authenticationEntryPoint(new
+                // LoginUrlAuthenticationEntryPoint("/login"))
+                // ).build();
+                OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+                // OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+                // OAuth2AuthorizationServerConfigurer.authorizationCode();
 
-//        authorizationServerConfigurer
-//                .tokenEndpoint(tokenEndpoint -> tokenEndpoint
-//                        .errorResponseHandler( new AuthenticationFailureHandler())
-//                        // 密码模式
-//                        .accessTokenRequestConverter(new OAuth2PasswordAuthenticationConvert())
-//                        .authenticationProvider(new OAuth2PasswordAuthenticationProvider())
-//                )
-//                .authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint.errorResponseHandler(new AuthenticationFailureHandler()))
-//                .clientAuthentication(
-//                        clientAuthentication -> clientAuthentication.errorResponseHandler(new AuthenticationFailureHandler())
-//                );
+                // authorizationServerConfigurer
+                // .tokenEndpoint(tokenEndpoint -> tokenEndpoint
+                // .errorResponseHandler( new AuthenticationFailureHandler())
+                // // 密码模式
+                // .accessTokenRequestConverter(new OAuth2PasswordAuthenticationConvert())
+                // .authenticationProvider(new OAuth2PasswordAuthenticationProvider())
+                // )
+                // .authorizationEndpoint(authorizationEndpoint ->
+                // authorizationEndpoint.errorResponseHandler(new
+                // AuthenticationFailureHandler()))
+                // .clientAuthentication(
+                // clientAuthentication -> clientAuthentication.errorResponseHandler(new
+                // AuthenticationFailureHandler())
+                // );
 
-        RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
-//        httpSecurity.requestMatcher(endpointsMatcher)
-//                .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-//                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher));
+                RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
+                // httpSecurity.requestMatcher(endpointsMatcher)
+                // .authorizeRequests(authorizeRequests ->
+                // authorizeRequests.anyRequest().authenticated())
+                // .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher));
 
-        httpSecurity.securityMatcher(endpointsMatcher)
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher));
+                httpSecurity.securityMatcher(endpointsMatcher)
+                                .authorizeHttpRequests(
+                                                authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher));
 
+                httpSecurity.exceptionHandling(exception -> exception.accessDeniedHandler(new AccessDeniedHandler()));
+                httpSecurity.with(authorizationServerConfigurer, (authorizationServer) -> {
+                        authorizationServer.tokenEndpoint(tokenEndpoint -> tokenEndpoint
+                                        .errorResponseHandler(new AuthenticationFailureHandler())
+                                        // 密码模式
+                                        .accessTokenRequestConverter(new OAuth2PasswordAuthenticationConvert())
+                                        .authenticationProvider(new OAuth2PasswordAuthenticationProvider()))
+                                        .authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint
+                                                        .errorResponseHandler(new AuthenticationFailureHandler()))
+                                        .clientAuthentication(
+                                                        clientAuthentication -> clientAuthentication
+                                                                        .errorResponseHandler(
+                                                                                        new AuthenticationFailureHandler()))
+                                        .oidc(Customizer.withDefaults());
+                });
+                httpSecurity.addFilterBefore(servletRequestJsonParamsWrapperFilter, ChannelProcessingFilter.class);
 
-        httpSecurity.exceptionHandling(exception -> exception.accessDeniedHandler(new AccessDeniedHandler()));
-        httpSecurity.with(authorizationServerConfigurer, (authorizationServer) -> {
-            authorizationServer.tokenEndpoint(tokenEndpoint -> tokenEndpoint
-                            .errorResponseHandler(new AuthenticationFailureHandler())
-                            // 密码模式
-                            .accessTokenRequestConverter(new OAuth2PasswordAuthenticationConvert())
-                            .authenticationProvider(new OAuth2PasswordAuthenticationProvider())
-                    )
-                    .authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint.errorResponseHandler(new AuthenticationFailureHandler()))
-                    .clientAuthentication(
-                            clientAuthentication -> clientAuthentication.errorResponseHandler(new AuthenticationFailureHandler())
-                    )
-                    .oidc(Customizer.withDefaults());
-        });
-        httpSecurity.addFilterBefore(servletRequestJsonParamsWrapperFilter, ChannelProcessingFilter.class);
+                return httpSecurity.build();
+        }
 
-        return httpSecurity.build();
-    }
+        @Bean
+        public OAuth2AuthorizationService oAuth2AuthorizationService(
+                        JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository,
+                        ObjectMapper objectMapper) {
+                JdbcOAuth2AuthorizationService authorizationService = new JdbcOAuth2AuthorizationService(jdbcTemplate,
+                                registeredClientRepository);
+                JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper authorizationRowMapper = new JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper(
+                                registeredClientRepository);
+                authorizationRowMapper.setLobHandler(new DefaultLobHandler());
 
-    @Bean
-    public OAuth2AuthorizationService oAuth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
-    }
+                ClassLoader classLoader = JdbcOAuth2AuthorizationService.class.getClassLoader();
+                List<com.fasterxml.jackson.databind.Module> securityModules = SecurityJackson2Modules
+                                .getModules(classLoader);
+                objectMapper.registerModules(securityModules);
+                objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+                // 放入自定义的user类
+                objectMapper.addMixIn(TokenSettings.class, OAuth2AuthorizationJackson2Module.TokenSettingsMixin.class);
+                objectMapper.addMixIn(ClientSettings.class,
+                                OAuth2AuthorizationJackson2Module.ClientSettingsMixin.class);
+                objectMapper.addMixIn(OAuth2TokenFormat.class,
+                                OAuth2AuthorizationJackson2Module.OAuth2TokenFormatMixin.class);
+                authorizationRowMapper.setObjectMapper(objectMapper);
 
-    @Bean
-    public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-        return new JdbcRegisteredClientRepository(jdbcTemplate);
-    }
+                authorizationService.setAuthorizationRowMapper(authorizationRowMapper);
+                return authorizationService;
+        }
 
-    @Bean
-    public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder().issuer("http://127.0.0.1:8090").build();
-    }
+        @Bean
+        public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+                return new JdbcRegisteredClientRepository(jdbcTemplate);
+        }
 
-    @Bean
-    public OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator() {
-        return new DelegatingOAuth2TokenGenerator(
-                new OAuth2AccessTokenGenerator(), new OAuth2RefreshTokenGenerator());
-    }
+        @Bean
+        public AuthorizationServerSettings authorizationServerSettings() {
+                return AuthorizationServerSettings.builder().issuer("http://127.0.0.1:8090").build();
+        }
+
+        @Bean
+        public OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator() {
+                return new DelegatingOAuth2TokenGenerator(
+                                new OAuth2AccessTokenGenerator(), new OAuth2RefreshTokenGenerator());
+        }
 
 }
