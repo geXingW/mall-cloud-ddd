@@ -22,6 +22,7 @@
         <module>mall-user</module>
         <module>mall-aggregate</module>
         <module>mall-auth</module>
+        <module>mall-gateway</module>
     </modules>
 
     <properties>
@@ -33,6 +34,7 @@
         <dubbo.version>3.2.10</dubbo.version>
 
         <oauth2-authorization-server.version>1.3.7</oauth2-authorization-server.version>
+<!--        <oauth2-authorization-server.version>1.5.2</oauth2-authorization-server.version>-->
 
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <druid.version>1.2.20</druid.version>
