@@ -1,0 +1,52 @@
+server:
+    port: 8090
+
+spring:
+  application:
+    name: mall-user-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        namespace: ${NACOS_NAMESPACE:mall-cloud-ddd}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        refresh-enabled: true
+
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+#          introspection-uri: http://mall-auth-service:8080/oauth2/introspect
+          introspection-uri: http://localhost:8080/oauth2/introspect
+#          client-id: mall-user-service
+#          client-secret: user-service-secret
+          client-id: g1m1hmpuyh7f7cy
+          client-secret: yhuepsulyfj7wtlwiiuzuircj90hdm
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-enable: false
+    register-mode: instance
+
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+
+  registry:
+    address: nacos://${spring.cloud.nacos.config.server-addr}
+    parameters:
+      namespace: ${spring.cloud.nacos.config.namespace}
+      group: ${spring.cloud.nacos.config.group}
+  #      register-consumer-url: true
+
+  consumer:
+    check: false
+
+
+debug: true

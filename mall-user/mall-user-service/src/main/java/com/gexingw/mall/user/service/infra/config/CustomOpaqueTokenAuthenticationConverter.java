@@ -1,4 +1,4 @@
-package com.gexingw.mall.user.service.infra.dao.config;
+package com.gexingw.mall.user.service.infra.config;
 
 import com.gexingw.mall.infrastucture.core.domain.AuthInfo;
 import org.springframework.core.convert.converter.Converter;
