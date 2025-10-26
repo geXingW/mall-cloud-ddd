@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationGrantAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.util.Assert;
@@ -70,48 +71,60 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
         RegisteredClientPO registeredClientPO = SpringUtil.getBean(RegisteredClientMapper.class).selectById(registeredClientId);
         Authentication userAuthentication = this.getAuthentication(authentication, registeredClientPO);
 
-        // AccessToken
-        DefaultOAuth2TokenContext accessTokenContext = DefaultOAuth2TokenContext.builder().registeredClient(registeredClient)
-                .principal(userAuthentication).tokenType(OAuth2TokenType.ACCESS_TOKEN).authorizedScopes(registeredClient.getScopes())
-                .authorizationGrantType(new AuthorizationGrantType(this.grantType())).build();
-        //noinspection unchecked
-        OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator = SpringUtil.getBean(OAuth2TokenGenerator.class);
-        OAuth2Token accessToken = tokenGenerator.generate(accessTokenContext);
-        Assert.notNull(accessToken, "AccessToken should not be null!");
-
-        OAuth2AccessToken oAuth2AccessToken = new OAuth2AccessToken(
-                OAuth2AccessToken.TokenType.BEARER, accessToken.getTokenValue(), accessToken.getIssuedAt(), accessToken.getExpiresAt()
-                , authenticationToken.getScopes()
-        );
-        OAuth2Authorization.Builder oAuth2AuthroizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
+        OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
                 .principalName(authentication.getName())
                 .attribute(Principal.class.getName(), userAuthentication)
                 .authorizedScopes(authenticationToken.getScopes())
                 .attribute(OAuth2Constant.TOKEN_SETTINGS, registeredClient.getTokenSettings())
                 .authorizationGrantType(new AuthorizationGrantType(this.grantType()))
-                .accessToken(oAuth2AccessToken);
+//                .accessToken(oAuth2AccessToken)
+                ;
+        OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
+
+        DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
+                .registeredClient(registeredClient)
+                .principal(clientPrincipal)
+                .authorizationServerContext(AuthorizationServerContextHolder.getContext())
+                .authorizedScopes(authenticationToken.getScopes())
+                .tokenType(OAuth2TokenType.ACCESS_TOKEN)
+                .authorizationGrantType(new AuthorizationGrantType(GRANT_TYPE))
+                .authorizationGrant(authenticationToken)
+                ;
+
+
+        // AccessToken
+        DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
+        //noinspection unchecked
+        OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator = SpringUtil.getBean(OAuth2TokenGenerator.class);
+        OAuth2Token generatedAccessToken = tokenGenerator.generate(tokenContext);
+        Assert.notNull(generatedAccessToken, "AccessToken should not be null!");
+
+        OAuth2AccessToken accessToken = OAuth2AuthenticationProviderUtils.accessToken(
+                authorizationBuilder, generatedAccessToken, tokenContext
+        );
 
         // 配置refreshToken，生成RefreshToken
-        OAuth2RefreshToken oAuth2RefreshToken = null;
+        OAuth2RefreshToken refreshToken = null;
         if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
             DefaultOAuth2TokenContext.builder().registeredClient(registeredClient);
 
-            DefaultOAuth2TokenContext refreshTokenContext = DefaultOAuth2TokenContext.builder().registeredClient(registeredClient)
-                    .tokenType(OAuth2TokenType.REFRESH_TOKEN).authorizationGrantType(new AuthorizationGrantType(this.grantType()))
-                    .build();
-            OAuth2Token refreshToken = tokenGenerator.generate(refreshTokenContext);
-            Assert.notNull(refreshToken, "RefreshToken should not be null.");
+            tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 
-            oAuth2RefreshToken = (OAuth2RefreshToken) refreshToken;
-            oAuth2AuthroizationBuilder.refreshToken(oAuth2RefreshToken);
+            OAuth2Token generateRefreshToken = tokenGenerator.generate(tokenContext);
+            refreshToken = (OAuth2RefreshToken) generateRefreshToken;
+            authorizationBuilder.refreshToken(refreshToken);
         }
+
+        OAuth2Authorization authorization = authorizationBuilder.build();
 
         OAuth2AuthorizationService authorizationService = SpringUtil.getBean(OAuth2AuthorizationService.class);
         Assert.notNull(authorizationService, "OAuth2AuthorizationService should not be null!");
-        authorizationService.save(oAuth2AuthroizationBuilder.build());
+
+        authorizationService.save(authorization);
+
         SecurityContextHolder.clearContext();
 
-        return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken);
+        return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
     }
 
     public Authentication getAuthentication(Authentication authentication, RegisteredClientPO registeredClient) {
